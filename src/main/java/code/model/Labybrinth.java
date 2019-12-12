@@ -1,6 +1,7 @@
 package code.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,6 +18,15 @@ public class Labybrinth {
     public Labybrinth() {
     }
 
+    @JsonIgnore
+    public int[][] init() {
+        pattern = new int[height][width];
+        for (int i=0;i<height;i++)
+            for (int j=0;j<width;j++)
+                if (i==0||j==0||i==height-1||j==width-1)pattern[i][j] = 1;
+                else pattern[i][j] = 0;
+        return pattern;
+    }
     public Labybrinth(int width, int height) {
         this.width = width;
         this.height = height;
@@ -108,6 +118,7 @@ public class Labybrinth {
         pattern[y][x] = b;
     }
 
+    @JsonIgnore
     public boolean isLabybrith() {
         if ((height < 7) || (width < 7) || (height > 31) || (width > 31) || (height % 2 == 0) || (width % 2 == 0))
             return false;

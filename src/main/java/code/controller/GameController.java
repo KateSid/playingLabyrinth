@@ -18,6 +18,7 @@ public class GameController {
         lb.setHeight(initLab.get("height"));
         lb.setWidth(initLab.get("width"));
         lb.setTheme(initLab.get("theme"));
+        lb.init();
     }
 
     @RequestMapping(value = "/molegenerate", method = RequestMethod.GET, produces = "application/json")
@@ -52,6 +53,10 @@ public class GameController {
         // Чтение списка файлов каталога
         File[] lst = dir.listFiles(new Filter("maze"));
         return lst;
+    }
+    @RequestMapping(value = "/getlab", method = RequestMethod.GET, produces = "application/json")
+    public Labybrinth getLab() {
+        return lb;
     }
     @RequestMapping(value = "/load/{name}", method = RequestMethod.GET, produces = "application/json")
     public Labybrinth loadLab(@PathVariable String name) throws IOException {

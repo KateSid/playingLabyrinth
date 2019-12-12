@@ -105,64 +105,11 @@ public class GeneratorBacktraking {
         }
     }
 
-    private void setEntryAndExit(){
-        try {
-        Random r=new Random();
-        int exitX=0;
-        int exitY=0;
-        int entryX=2*(r.nextInt((width-1)/2))+1;
-        int entryY=2*(r.nextInt((height-1)/2))+1;
-        switch (r.nextInt(4)) {//0-левая стенка,1-верхняя,2-правая,3-нижняя
-            case 0:
-                entryX=0;
-                break;
-            case 1:
-                entryY=0;
-                break;
-            case 2:
-                entryX=width-1;
-                break;
-            case 3:
-                entryY=height-1;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value" );
-        }
-        do {
-            exitX = 2 * (r.nextInt((width - 1) / 2)) + 1;
-            exitY = 2 * (r.nextInt((height - 1) / 2)) + 1;
-            switch (r.nextInt(4)) {//0-левая стенка,1-верхняя,2-правая,3-нижняя
-                case 0:
-                    exitX = 0;
-                    break;
-                case 1:
-                    exitY = 0;
-                    break;
-                case 2:
-                    exitX = width-1;
-                    break;
-                case 3:
-                    exitY = height-1;
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value");
-            }
-        }
-        while( (exitX==entryX) && (exitY==entryY) );
-        pattern[entryY][entryX]=3;
-        pattern[exitY][exitX]=4;
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
     public int[][] generate(int height, int width){
         this.height=height;
         this.width=width;
         init();
         generateToStep();
-        setEntryAndExit();
         return pattern;
     }
 }

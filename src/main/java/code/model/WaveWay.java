@@ -1,6 +1,7 @@
 package code.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WaveWay implements SearchWay {
     private int[][] labybrinth;
@@ -79,36 +80,32 @@ public class WaveWay implements SearchWay {
                     }
                 }
             }
-        for (int i=0; i<labybrinth.length;i++) {
-            for (int j = 0; j < labybrinth[0].length; j++)
-                System.out.print(labybrinth[i][j]+"  ");
-            System.out.println();
-        }
-        if (isExit) cellList.add(new Cell(stopX, stopY));
+        //if (isExit) cellList.add(new Cell(stopX, stopY));
         while (isExit) {
             if ((stopX + 1 < labybrinth[0].length) && (labybrinth[stopY][stopX + 1] < labybrinth[stopY][stopX])&&(labybrinth[stopY][stopX + 1] > 4)){
                     if (labybrinth[stopY][stopX + 1] == 5) isExit=false;
-                    cellList.add(new Cell(stopX + 1, stopY));
-                    stopX = stopX + 1;
+                    else {cellList.add(new Cell(stopX + 1, stopY));
+                    stopX = stopX + 1;}
                 }
             else if ((stopX - 1 >= 0)&&(labybrinth[stopY][stopX - 1] < labybrinth[stopY][stopX])&&(labybrinth[stopY][stopX - 1] > 4)){
                     if (labybrinth[stopY][stopX - 1] == 5) isExit=false;
-                    cellList.add(new Cell(stopX - 1, stopY));
-                    stopX = stopX - 1;
+                    else {cellList.add(new Cell(stopX - 1, stopY));
+                    stopX = stopX - 1;}
 
                 }
             else if ((stopY - 1 >= 0)&&(labybrinth[stopY - 1][stopX] < labybrinth[stopY][stopX])&&(labybrinth[stopY - 1][stopX] > 4) ){
                     if (labybrinth[stopY - 1][stopX] == 5) isExit=false;
-                    cellList.add(new Cell(stopX , stopY- 1));
-                    stopY = stopY - 1;
+                    else {cellList.add(new Cell(stopX , stopY- 1));
+                    stopY = stopY - 1;}
                 }
                 else if ((stopY + 1 < labybrinth.length)&&(labybrinth[stopY + 1][stopX] < labybrinth[stopY][stopX])&&(labybrinth[stopY + 1][stopX] > 4)){
                     if (labybrinth[stopY + 1][stopX] == 5) isExit=false;
-                    cellList.add(new Cell(stopX , stopY+ 1));
-                    stopY = stopY + 1;
+                    else {cellList.add(new Cell(stopX , stopY+ 1));
+                    stopY = stopY + 1;}
 
                 }
         }
+        Collections.reverse(cellList);
         return cellList;
     }
 }
