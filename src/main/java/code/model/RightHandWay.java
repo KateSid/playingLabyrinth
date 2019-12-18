@@ -83,10 +83,12 @@ public class RightHandWay implements SearchWay{
             direction=1;
         }
         changeDirection(direction);
-        while (!((startX==stopX)&&(stopY==startY))){
+        int check=0;
+        while (!((startX==stopX)&&(stopY==startY))&&(check!=l.getHeight()*l.getWidth()*5)){
             if (rightWall(startX,startY)){
             if (canMakeStep(startX,startY)){
                 cellList.add(new Cell(startX, startY));
+                check++;
                 startX=startX + iterX;
                 startY=startY + iterY;
             }
@@ -101,10 +103,12 @@ public class RightHandWay implements SearchWay{
                 if (direction==-1) direction=3;
                 changeDirection(direction);
                 cellList.add(new Cell(startX, startY));
+                check++;
                 startX=startX + iterX;
                 startY=startY + iterY;
                 }
             }
+        if (check==l.getHeight()*l.getWidth()*5) return new ArrayList<Cell>();
         return cellList;
     }
 }

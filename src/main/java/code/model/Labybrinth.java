@@ -3,7 +3,9 @@ package code.model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @JsonAutoDetect
@@ -119,6 +121,7 @@ public class Labybrinth {
 
     @JsonIgnore
     public boolean isLabybrith() {
+        if (pattern.length!=height || pattern[0].length!=width) return false;
         if ((height < 7) || (width < 7) || (height > 31) || (width > 31) || (height % 2 == 0) || (width % 2 == 0))
             return false;
         if ((theme > 3) || (theme < 0))
@@ -133,25 +136,58 @@ public class Labybrinth {
             return false;
         if ((stop.getY() == start.getY()) && (stop.getX() == start.getX()))
             return false;
-       /* boolean enter = false;
-        boolean exit = false;
-        int countEnter = 0;
-        int countExit = 0;
-        boolean walls = true;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (pattern[i][j] == 3) {
-                    if (start.getX() == i && start.getY() == j) enter = true;
-                    countEnter++;
-                } else if (pattern[i][j] == 4) {
-                    if (stop.getX() == i && stop.getY() == j) exit = true;
-                    countExit++;
-                } else if ((i == 0) || (j == 0) || (i == height - 1) || (j == width - 1))
-                    if (pattern[i][j] != 1) return false;
-            }
-        }
-        if (countEnter > 1 || countExit > 1 || !enter || !exit) return false;*/
         return true;
     }
+
+    public boolean itTrueStruct(){
+        ArrayList<Cell> errorCell = new ArrayList<Cell>();
+        for (int i=1; i<height-1; i++)
+            for (int j=1; j<width-1; j++)
+                if (checkCell(j,i)){
+                    errorCell.add(new Cell(j,i));
+                }
+        errorCell=findStop(errorCell);
+        if (errorCell.size()==0) return true;
+        else return false;
+    }
+
+    private boolean checkCell(int x, int y){
+        // проверяем квадраты на равенство, если в квадрате 4 одинаковых элемент значит тру
+        if  ((pattern[y][x] == pattern[y + 1][x] //правый нижний квадрат
+                &&pattern[y][x] ==pattern[y][x + 1]
+                && pattern[y][x] == pattern[y + 1][ x + 1])
+                ||(pattern[y][ x] == pattern[y - 1][ x] // левый верхний квадрат
+                    && pattern[y][ x] ==pattern[y][ x - 1]
+                    && pattern[y][x] ==pattern[y - 1][ x - 1])
+                || (pattern[y][ x] == pattern[y - 1][ x] // правый верхний квадрат
+                    && pattern[y][ x] ==pattern[y][ x + 1]
+                    && pattern[y][x] == pattern[y - 1][ x + 1])
+                || (pattern[y][ x] == pattern[y + 1][ x] // левый нижний квадрат
+                    && pattern[y][ x] == pattern[y][ x - 1]
+                    && pattern[y][ x] == pattern[y + 1][ x - 1])) return true;
+        return false;
+        }
+    private ArrayList<Cell> findStop(ArrayList<Cell> erCell){
+        int a;
+        for (int y=1; y<height-1; y++)
+             for (int x=1; x<width-1; x++){
+             a = 0;
+             if (pattern[y][x - 1] == 1)
+                     a += 1;
+
+             if (pattern[y - 1][x] == 1)
+                     a += 1;
+
+             if (pattern[y][x + 1] == 1)
+                     a += 1;
+             if (pattern[y + 2][x] == 0)
+                     a += 1;
+
+             if (a == 4)
+                 erCell.add(new Cell(x,y));
+         }
+        return erCell;
+        }
+
 }
 
