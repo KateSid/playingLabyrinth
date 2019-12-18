@@ -80,7 +80,6 @@ public class WaveWay implements SearchWay {
                     }
                 }
             }
-        //if (isExit) cellList.add(new Cell(stopX, stopY));
         while (isExit) {
             if ((stopX + 1 < labybrinth[0].length) && (labybrinth[stopY][stopX + 1] < labybrinth[stopY][stopX])&&(labybrinth[stopY][stopX + 1] > 4)){
                     if (labybrinth[stopY][stopX + 1] == 5) isExit=false;

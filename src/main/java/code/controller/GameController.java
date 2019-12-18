@@ -66,7 +66,6 @@ public class GameController {
         String relativePath = "src"+ fileSeparator+"main"+ fileSeparator+"resources"+ fileSeparator+"files"+ fileSeparator+ name;
         ObjectMapper mapper = new ObjectMapper();
         lb=mapper.readValue(new File(relativePath), Labybrinth.class);
-        System.out.println(lb.isLabybrith());
         return lb;
     }
     @RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
