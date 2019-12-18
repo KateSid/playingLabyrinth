@@ -33,7 +33,10 @@ public class GameController {
         lb=lg.generateBacktracking(lb);
         return lb;
     }
-
+    @RequestMapping(value = "/getlab", method = RequestMethod.GET, produces = "application/json")
+    public Labybrinth getLab() {
+        return lb;
+    }
     @RequestMapping(value = "/wavesearch", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Cell> waveSearchWay() {
         SearchWay sw=new WaveWay();
@@ -45,18 +48,17 @@ public class GameController {
         return sw.search(lb);
     }
     @RequestMapping(value = "/load", method = RequestMethod.GET, produces = "application/json")
-    public File[] loadLabs() {
+    public ArrayList<String> loadLabs() {
         String fileSeparator = System.getProperty("file.separator");// получаем разделитель пути в текущей операционной системе
         String relativePath = "src"+ fileSeparator+"main"+ fileSeparator+"resources"+ fileSeparator+"files";
         // Определение директории
         File dir = new File(relativePath);
         // Чтение списка файлов каталога
         File[] lst = dir.listFiles(new Filter("maze"));
-        return lst;
-    }
-    @RequestMapping(value = "/getlab", method = RequestMethod.GET, produces = "application/json")
-    public Labybrinth getLab() {
-        return lb;
+        ArrayList<String> st=new ArrayList<String>();
+        for (int i=0; i<lst.length;i++)
+            st.add(lst[i].getName());
+        return st;
     }
     @RequestMapping(value = "/load/{name}", method = RequestMethod.GET, produces = "application/json")
     public Labybrinth loadLab(@PathVariable String name) throws IOException {

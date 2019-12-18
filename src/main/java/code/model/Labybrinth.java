@@ -70,7 +70,6 @@ public class Labybrinth {
                 start.equals(that.start) &&
                 stop.equals(that.stop);
     }
-
     @Override
     public int hashCode() {
         int result = Objects.hash(width, height, theme, start, stop);
