@@ -55,7 +55,7 @@ public class GeneratorMole {
         int c;
         boolean b;
 
-        for(int i = 0; i < height; i++) // Массив заполняется землей-ноликами
+        for(int i = 0; i < height; i++) // Массив заполняется землей-1
             for(int j = 0; j < width; j++)
                 pattern[i][j] = 1;
         while(true){

@@ -33,10 +33,12 @@ public class GameController {
         lb=lg.generateBacktracking(lb);
         return lb;
     }
+
     @RequestMapping(value = "/getlab", method = RequestMethod.GET, produces = "application/json")
     public Labybrinth getLab() {
         return lb;
     }
+
     @RequestMapping(value = "/wavesearch", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Cell> waveSearchWay() {
         SearchWay sw=new WaveWay();
@@ -66,7 +68,6 @@ public class GameController {
         String relativePath = "src"+ fileSeparator+"main"+ fileSeparator+"resources"+ fileSeparator+"files"+ fileSeparator+ name;
         ObjectMapper mapper = new ObjectMapper();
         lb=mapper.readValue(new File(relativePath), Labybrinth.class);
-        System.out.println(lb.isLabybrith());
         return lb;
     }
     @RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
@@ -78,7 +79,12 @@ public class GameController {
         mapper.writeValue( new File(relativePath), lb);
     }
     @RequestMapping(value = "/hand", method = RequestMethod.POST, produces = "application/json")
-    public void handGenerate(@RequestBody Labybrinth l) {
-        if (l.isLabybrith()) lb=l;
+    public boolean handGenerate(@RequestBody Labybrinth l) {
+        RightHandWay rw= new RightHandWay();
+        if (l.isLabybrith() && l.itTrueStruct() && rw.search(l).size()!=0) {
+            lb=l;
+            return true;
+        }
+        return false;
     }
 }
