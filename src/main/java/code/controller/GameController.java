@@ -67,7 +67,12 @@ public class GameController {
         String fileSeparator = System.getProperty("file.separator");// получаем разделитель пути в текущей операционной системе
         String relativePath = "src"+ fileSeparator+"main"+ fileSeparator+"resources"+ fileSeparator+"files"+ fileSeparator+ name;
         ObjectMapper mapper = new ObjectMapper();
-        lb=mapper.readValue(new File(relativePath), Labybrinth.class);
+        Labybrinth l = new Labybrinth();
+        l=mapper.readValue(new File(relativePath), Labybrinth.class);
+        if (l.isLabybrith() && l.itTrueStruct()) {
+            lb=l;
+        }
+        else lb=new Labybrinth(lb.getWidth(),lb.getHeight());
         return lb;
     }
     @RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
@@ -81,7 +86,7 @@ public class GameController {
     @RequestMapping(value = "/hand", method = RequestMethod.POST, produces = "application/json")
     public boolean handGenerate(@RequestBody Labybrinth l) {
         RightHandWay rw= new RightHandWay();
-        if (l.isLabybrith() && l.itTrueStruct() && rw.search(l).size()!=0) {
+        if (l.isLabybrith() && l.itTrueStruct()) {
             lb=l;
             return true;
         }
