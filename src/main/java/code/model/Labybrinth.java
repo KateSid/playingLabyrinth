@@ -138,19 +138,19 @@ public class Labybrinth {
             return false;
         return true;
     }
-
+    @JsonIgnore
     public boolean itTrueStruct(){
         ArrayList<Cell> errorCell = new ArrayList<Cell>();
-        for (int i=1; i<height-1; i++)
+     /*   for (int i=1; i<height-1; i++)
             for (int j=1; j<width-1; j++)
                 if (checkCell(j,i)){
                     errorCell.add(new Cell(j,i));
-                }
+                }*/
         errorCell=findStop(errorCell);
         if (errorCell.size()==0) return true;
         else return false;
     }
-
+    @JsonIgnore
     private boolean checkCell(int x, int y){
         // проверяем квадраты на равенство, если в квадрате 4 одинаковых элемент значит тру
         if  ((pattern[y][x] == pattern[y + 1][x] //правый нижний квадрат
@@ -167,6 +167,7 @@ public class Labybrinth {
                     && pattern[y][ x] == pattern[y + 1][ x - 1])) return true;
         return false;
         }
+    @JsonIgnore
     private ArrayList<Cell> findStop(ArrayList<Cell> erCell){
         int a;
         for (int y=1; y<height-1; y++)
@@ -180,7 +181,7 @@ public class Labybrinth {
 
              if (pattern[y][x + 1] == 1)
                      a += 1;
-             if (pattern[y + 2][x] == 0)
+             if (pattern[y + 1][x] == 0)
                      a += 1;
 
              if (a == 4)

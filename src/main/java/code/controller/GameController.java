@@ -69,10 +69,10 @@ public class GameController {
         ObjectMapper mapper = new ObjectMapper();
         Labybrinth l = new Labybrinth();
         l=mapper.readValue(new File(relativePath), Labybrinth.class);
-        if (l.isLabybrith() && l.itTrueStruct()) {
+        if (l.isLabybrith()) {
             lb=l;
         }
-        else lb=new Labybrinth(lb.getWidth(),lb.getHeight());
+        else lb=new Labybrinth();
         return lb;
     }
     @RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
@@ -84,12 +84,12 @@ public class GameController {
         mapper.writeValue( new File(relativePath), lb);
     }
     @RequestMapping(value = "/hand", method = RequestMethod.POST, produces = "application/json")
-    public boolean handGenerate(@RequestBody Labybrinth l) {
-        RightHandWay rw= new RightHandWay();
-        if (l.isLabybrith() && l.itTrueStruct()) {
+    public void handGenerate(@RequestBody Labybrinth l) {
+       // RightHandWay rw= new RightHandWay();
+        //if (l.isLabybrith() && l.itTrueStruct()) {
             lb=l;
-            return true;
-        }
-        return false;
+            //return true;
+       // }
+        //return false;
     }
 }
